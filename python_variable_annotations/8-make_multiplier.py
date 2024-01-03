@@ -1,11 +1,12 @@
-from typing import multiplier
-!/usr/bin/env python3
-"""8"""
+#!/usr/bin/env python3
+"""multiplier"""
 
 
-def make_multiplier
+from typing import Callable
 
 
-()
-"""8"""
-return
+def make_multiplier(multiplier: float) -> Callable[[float], float]:
+    """Returns a function that multiplies a float by the given multiplier."""
+    def multiplier_function(number: float) -> float:
+        return number * multiplier
+    return multiplier_function
