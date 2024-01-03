@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
-"""comment"""
+"""addsum"""
 
 
 def add(a: float, b: float) -> float:
-    """Hello"""
+    """returnsum"""
     return a + b
