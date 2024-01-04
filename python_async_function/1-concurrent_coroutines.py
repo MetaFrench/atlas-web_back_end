@@ -1,22 +1,28 @@
 #!/usr/bin/env python3
-"""concurrent"""
+"""concurency"""
 
 
 import asyncio
-# Importing wait_random from the previous file
-from random_delay import wait_random
+from typing import List
+from random import uniform
+from asyncio import gather
 
 
-async def wait_n(n: int, max_delay: int) -> list:
+async def wait_random(max_delay: int = 10) -> float:
+    return uniform(0, max_delay)
+
+
+async def wait_n(n: int, max_delay: int) -> List[float]:
     tasks = [wait_random(max_delay) for _ in range(n)]
-    completed_tasks = await asyncio.gather(*tasks)
-    return sorted(completed_tasks)
+    results = await gather(*tasks)
+    return sorted(results)
+
+# Example usage:
 
 
 async def main():
-    # Example: wait for 5 random delays up to 10 seconds each
-    delays = await wait_n(5, 10)
-    print(delays)  # Print the sorted list of delays
+    delays = await wait_n(5, 8)
+    print(delays)
 
-if __name__ == "__main__":
-    asyncio.run(main())
+# Run the event loop
+asyncio.run(main())
