@@ -1,15 +1,14 @@
 #!/usr/bin/env python3
-"""hello"""
 
+""" Asynchronous coroutine"""
 import asyncio
-import random
+from random import uniform
 from typing import List
+wait_random = __import__('0-basic_async_syntax').wait_random
 
 
-async def wait_n(n: int, max_delay: int) -> List[float]:
-    """hello"""
-    async def wait_random(max_delay: int) -> float:
-        return random.uniform(0, max_delay)
-
-    delays = [wait_random(max_delay) for _ in range(n)]
-    return await asyncio.gather(*delays)
+async def task_wait_n(n: int, max_delay: int) -> List[float]:
+    """This spawns wait_random """
+    tasks = [wait_random(max_delay) for _ in range(n)]
+    delays = await asyncio.gather(*tasks)
+    return sorted(delays)
