@@ -18,25 +18,3 @@ my_cache.put("E", "Battery")
 my_cache.put("A", "Street")
 my_cache.print_cache()
 print(my_cache.get("A"))
-
-guillaume@ubuntu: ~ /$ ./0-main.py
-Current cache:
-Current cache:
-A: Hello
-B: World
-C: Holberton
-Hello
-World
-Holberton
-None
-Current cache:
-A: Hello
-B: World
-C: Holberton
-Current cache:
-A: Street
-B: World
-C: Holberton
-D: School
-E: Battery
-Street
