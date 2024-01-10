@@ -5,15 +5,15 @@ from base_caching import BaseCaching
 
 
 class MRUCache(BaseCaching):
-    """Create the class MRU"""
+    """Create the MRUCache class inheriting from BaseCaching"""
 
     def __init__(self):
-        """Call the parent"""
+        """Initialize the MRUCache class"""
         super().__init__()
         self.queue = []
 
     def put(self, key, item):
-        """ put the item in the key"""
+        """Add an item to the cache"""
         if key is None or item is None:
             return
 
@@ -35,11 +35,11 @@ class MRUCache(BaseCaching):
         self.queue.append(key)
 
     def get(self, key):
-        """ key in the cache or none"""
+        """Retrieve an item from the cache"""
         if key is None or key not in self.cache_data:
             return None
 
-        """Update the order as the key was used (most recently)"""
+        """Update the order of the key as MRU"""
         self.queue.remove(key)
         self.queue.append(key)
 
