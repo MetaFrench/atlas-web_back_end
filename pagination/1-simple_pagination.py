@@ -21,7 +21,7 @@ class Server:
         self.__dataset = None
 
     def dataset(self) -> List[List]:
-        """Get the dataset from the CSV file, caching it if not already cached."""
+        """Get the dataset from the CSV file."""
         if self.__dataset is None:
             with open(self.DATA_FILE) as f:
                 reader = csv.reader(f)
@@ -36,7 +36,7 @@ class Server:
         assert isinstance(
             page, int) and page > 0, "Page must be a positive integer"
         assert isinstance(
-            page_size, int) and page_size > 0, "Page size must be a positive integer"
+            page_size, int) and page_size > 0, "Page size positive integer"
 
         dataset = self.dataset()
         start, end = index_range(page, page_size)
