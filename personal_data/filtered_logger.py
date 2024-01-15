@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Contains a Logger and related functions for obfuscating sensitive data in log messages.
+Logger for obfuscating sensitive data in log messages.
 """
 import logging
 import re
