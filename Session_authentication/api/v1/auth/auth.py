@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Module containing basic API authentication
+"""API authentication
 """
 from flask import request
 from typing import List, TypeVar
@@ -29,10 +29,16 @@ class Auth:
         """validates all requests to secure the API.
         """
         if request is None or 'Authorization' not in request.headers:
-            return None
+            return
         return request.headers['Authorization']
 
     def current_user(self, request=None) -> TypeVar('User'):
         """Returns a User object
         """
         return None
+
+    def session_cookie(self, request=None):
+        """Retrieves the value of the session cookie from the request."""
+        if request is None:
+            return None
+        return request.cookies.get(os.getenv("SESSION_NAME"))
