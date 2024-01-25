@@ -1,4 +1,6 @@
-# auth.py
+#!/usr/bin/env python3
+"""Module that contains the Auth class
+"""
 
 from auth import _hash_password
 import bcrypt
