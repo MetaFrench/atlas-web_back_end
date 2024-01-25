@@ -1,10 +1,11 @@
 #!/usr/bin/env python3
-"""DB module
+"""DB module returns first row found in users
 """
 from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.orm.session import Session
+from sqlalchemy.orm.exc import NoResultFound
 
 from user import Base, User
 
