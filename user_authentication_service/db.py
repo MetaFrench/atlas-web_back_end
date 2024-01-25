@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""DB module returns first row found in users
+"""DB module
 """
 from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
@@ -18,7 +18,8 @@ class DB:
     def __init__(self) -> None:
         """Initialize a new DB instance
         """
-        self._engine = create_engine("sqlite:///a.db", echo=True)
+        # self._engine = create_engine("sqlite:///a.db", echo=True)
+        self._engine = create_engine("sqlite:///a.db", echo=False)
         Base.metadata.drop_all(self._engine)
         Base.metadata.create_all(self._engine)
         self.__session = None
@@ -33,12 +34,39 @@ class DB:
         return self.__session
 
     def add_user(self, email: str, hashed_password: str) -> User:
-        """Add a new user to the database
+        """Adds a user to the Users database and returns the new User object
         """
-        new_user = User(email=email, hashed_password=hashed_password)
-
-        self._session.add(new_user)
-
+        if not email:
+            return None
+        if not hashed_password:
+            return None
+        user: User = User()
+        user.email = email
+        user.hashed_password = hashed_password
+        self._session.add(user)
         self._session.commit()
+        return user
 
-        return new_user
+    def find_user_by(self, **kwargs) -> User:
+        """Returns a user using input keyword arguments."""
+        try:
+            user = self._session.query(User).filter_by(**kwargs).first()
+            if user is None:
+                raise NoResultFound
+            return user
+        except InvalidRequestError:
+            raise
+
+    def update_user(self, user_id: int, **kwargs) -> None:
+        """Used to update a user's attributes based on keyword arguments."""
+        try:
+            user = self.find_user_by(id=user_id)
+            for key, value in kwargs.items():
+                if hasattr(user, key):
+                    setattr(user, key, value)
+                else:
+                    raise ValueError
+            self._session.commit()
+            return None
+        except InvalidRequestError:
+            raise
