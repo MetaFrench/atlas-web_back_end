@@ -6,6 +6,11 @@ from unittest.mock import patch, PropertyMock
 from client import GithubOrgClient
 
 
+import unittest
+from unittest.mock import patch, PropertyMock
+from client import GithubOrgClient
+
+
 class TestGithubOrgClient(unittest.TestCase):
 
     @patch('client.get_json', return_value={"name": "test_org"})
@@ -45,6 +50,28 @@ class TestGithubOrgClient(unittest.TestCase):
 
         # Assert the result
         self.assertEqual(repos, expected_repos)
+
+    @patch('client.GithubOrgClient._public_repos_url', return_value="https://api.github.com/orgs/test_org/repos")
+    @patch('client.get_json', return_value=[{"license": {"key": "my_license"}}, {"license": {"key": "other_license"}}])
+    def test_has_license(self, mock_get_json, mock_public_repos_url):
+        github_client = GithubOrgClient("test_org")
+
+        # Parametrize inputs and expected results
+        test_params = [
+            ({"license": {"key": "my_license"}}, "my_license", True),
+            ({"license": {"key": "other_license"}}, "my_license", False),
+        ]
+
+        for repo, license_key, expected_result in test_params:
+            with self.subTest(repo=repo, license_key=license_key, expected_result=expected_result):
+                # Call the method and assert the result
+                result = github_client.has_license(repo, license_key)
+                self.assertEqual(result, expected_result)
+
+        # Assert that the mocks were called once
+        mock_get_json.assert_called_once_with(
+            "https://api.github.com/orgs/test_org/repos")
+        mock_public_repos_url.assert_called_once()
 
 
 if __name__ == "__main__":
