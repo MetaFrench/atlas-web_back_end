@@ -83,4 +83,3 @@ def replay(method: Callable) -> None:
     for input_str, output_str in zip(inputs, outputs):
         print(f"{method_name}(*{input_str.decode('utf-8')}) ->\
               {output_str.decode('utf-8')}")
-        
