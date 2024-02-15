@@ -1,0 +1,3 @@
+-- SQL script that creates a stored procedure
+-- `ComputeAverageScoreForUser` that computes and stores
+-- the average score for a student.
