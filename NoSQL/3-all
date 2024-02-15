@@ -1,0 +1,24 @@
+// Get database name from first argument
+const dbName = process.argv[0];
+
+// Connect to MongoDB
+const { MongoClient } = require("mongodb");
+const client = new MongoClient(uri);
+
+async function main() {
+  await client.connect();
+
+  // Get reference to database
+  const db = client.db(dbName);
+
+  // Get school collection
+  const collection = db.collection("school");
+
+  // Find and print all documents
+  const documents = await collection.find().toArray();
+  console.log(JSON.stringify(documents, null, 2));
+
+  client.close();
+}
+
+main();
