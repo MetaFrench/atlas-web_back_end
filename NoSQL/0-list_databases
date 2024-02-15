@@ -1,0 +1,3 @@
+// mongo script to show all databases
+
+show dbs
