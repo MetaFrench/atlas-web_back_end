@@ -1,0 +1,11 @@
+{
+    "devDependencies": {
+      "assert": "^2.0.0",
+      "chai": "^4.3.7",
+      "mocha": "^10.2.0",
+      "sinon": "^15.2.0"
+    },
+    "scripts": {
+      "test": "mocha"
+    }
+  }
